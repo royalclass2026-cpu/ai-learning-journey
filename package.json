@@ -1,26 +1,33 @@
 {
-  "name": "ai-learning-api",
+  "name": "ai-learning-week1",
   "version": "1.0.0",
-  "description": "Week 1 - LLM API Integration Learning Project",
-  "main": "server.js",
+  "description": "Production-ready Node.js AI API service - Week 1 Learning Journey",
   "type": "module",
+  "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js",
-    "test": "echo \"Tests coming soon\" && exit 0"
+    "start": "node server.js"
   },
-  "keywords": ["ai", "llm", "openai", "anthropic", "learning"],
+  "keywords": [
+    "ai",
+    "llm",
+    "openai",
+    "anthropic",
+    "api",
+    "backend"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "openai": "^4.20.0",
-    "@anthropic-ai/sdk": "^0.9.0",
-    "dotenv": "^16.3.1",
-    "cors": "^2.8.5",
-    "helmet": "^7.1.0"
+    "@google/generative-ai": "latest",
+    "chalk": "latest",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "helmet": "latest",
+    "openai": "latest"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "latest"
   }
 }

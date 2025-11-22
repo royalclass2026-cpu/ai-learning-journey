@@ -4,3 +4,9 @@ node_modules/
 *.log
 logs/
 .DS_Store
+dist/
+build/
+.env
+*.log
+logs/
+.DS_Store
