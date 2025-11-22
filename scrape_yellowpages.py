@@ -10,6 +10,7 @@ import csv
 import time
 from typing import List, Dict
 import re
+import random
 
 
 class YellowPagesScraper:
@@ -17,7 +18,17 @@ class YellowPagesScraper:
         self.base_url = base_url
         self.session = requests.Session()
         self.session.headers.update({
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Cache-Control': 'max-age=0'
         })
         self.companies = []
 
@@ -26,8 +37,17 @@ class YellowPagesScraper:
         url = f"{self.base_url}?page={page_num}" if page_num > 1 else self.base_url
         print(f"Fetching page {page_num}: {url}")
 
+        # Add Referer header for pages after the first one
+        headers = {}
+        if page_num > 1:
+            prev_url = f"{self.base_url}?page={page_num - 1}" if page_num > 2 else self.base_url
+            headers['Referer'] = prev_url
+
         try:
-            response = self.session.get(url, timeout=10)
+            # Add random delay to mimic human behavior
+            time.sleep(random.uniform(3, 6))
+
+            response = self.session.get(url, headers=headers, timeout=15)
             response.raise_for_status()
             return BeautifulSoup(response.content, 'html.parser')
         except requests.RequestException as e:
@@ -96,10 +116,6 @@ class YellowPagesScraper:
             self.companies.extend(page_companies)
             print(f"Found {len(page_companies)} companies on page {page_num}")
             print(f"Total companies so far: {len(self.companies)}\n")
-
-            # Be respectful - add delay between requests
-            if page_num < max_pages:
-                time.sleep(2)
 
         return self.companies
 
